@@ -127,7 +127,7 @@ Modern AI assistants can do arithmetic natively, but native arithmetic is opaque
 A calculator gives you an answer. `calculator-mcp` gives you an answer, a methodology, a wall-clock measurement, and in the case of multiplication, an audit trail.
 
 **Is it accurate?**
-Every engine is guaranteed to return the correct result. The Stochastic Area Engine reruns any experiment that fails its audit.
+Every engine is guaranteed to return the correct result, except `divide`, which is only as accurate as whoever answers. The Stochastic Area Engine reruns any experiment that fails its audit.
 
 **Why does `max` take so long?**
 The Temporal Ranking Engine measures each value in real seconds. Larger values take longer. This is by design.

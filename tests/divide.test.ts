@@ -81,3 +81,17 @@ describe("askCaller with nobody available", () => {
     );
   });
 });
+
+describe("askCaller reply parsing", () => {
+  it.each([
+    ["84 ÷ 7 = 12", 12],
+    ["84 / 7 = 12.", 12],
+    ["1,000,000", 1000000],
+    ["−3", -3],
+    [".5", 0.5],
+    ["1.2e+3", 1200],
+  ])("reads %j as %d", async (text, expected) => {
+    const result = await askCaller(1, 1, deps({ sample: async () => ({ text, model: "m1" }) }));
+    expect(result.answer).toBe(expected);
+  });
+});

@@ -15,10 +15,13 @@ export class NobodyAvailableError extends Error {
 }
 
 const QUIP = "Numbers of that size must be divided by a senior model.";
-const NUMBER = /-?\d+(?:\.\d+)?(?:e-?\d+)?/i;
+const NUMBER = /-?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?/i;
 
+/** Pulls the answer out of a reply, preferring whatever follows the last "=". */
 function parse(reply: string): number | string {
-  const match = reply.match(NUMBER);
+  const normalised = reply.replace(/−/g, "-").replace(/(\d),(?=\d{3}(?!\d))/g, "$1");
+  const tail = normalised.includes("=") ? normalised.slice(normalised.lastIndexOf("=") + 1) : normalised;
+  const match = tail.match(NUMBER) ?? normalised.match(NUMBER);
   return match ? Number(match[0]) : reply.trim();
 }
 
