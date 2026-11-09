@@ -1,6 +1,8 @@
 export interface EngineResult {
   answer: number | string;
   report: string[];
+  /** A text drawing of what the engine did, shown between the answer and the report. */
+  drawing?: string[];
 }
 
 export class CapExceededError extends Error {
@@ -20,6 +22,7 @@ export function formatResult(expression: string, result: EngineResult, elapsedMs
   return [
     `${expression} = ${result.answer}`,
     "",
+    ...(result.drawing?.length ? [...result.drawing.map((line) => `  ${line}`), ""] : []),
     "— Methodology report —",
     ...result.report.map((line) => `- ${line}`),
     `- Wall-clock time: ${Math.round(elapsedMs)} ms`,

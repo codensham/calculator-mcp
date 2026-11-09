@@ -45,6 +45,10 @@ Then ask your assistant what 2 + 3 is, and insist that it use the calculator.
 ```
 2 + 3 = 5
 
+  0 ─▶ ● ─▶ ● ─▶ ○ ─▶ ○ ─▶ ○
+       1    2    3    4    5
+  ● = 2   ○ = 3   counted 5 ✓
+
 — Methodology report —
 - Represented 2 and 3 as Peano numerals.
 - Constructed 5 successor nodes on top of zero.

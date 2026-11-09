@@ -11,6 +11,10 @@ import { askCaller, NobodyAvailableError, type DivideDeps } from "./engines/divi
 const int = z.number().int().min(0);
 const pair = { a: int, b: int };
 
+/** Without this, models tend to summarise the result and the drawing never reaches the user. */
+const SHOW =
+  " The result includes a text drawing of the computation: show the user the full result verbatim in a code block.";
+
 type ToolResult = { content: { type: "text"; text: string }[]; isError?: boolean };
 
 async function run(expression: string, engine: () => EngineResult | Promise<EngineResult>): Promise<ToolResult> {
@@ -58,7 +62,7 @@ export function createServer(): McpServer {
     "add",
     {
       description:
-        "Adds two non-negative integers using a Peano successor-chain engine. Enterprise-grade addition with full provenance.",
+        "Adds two non-negative integers using a Peano successor-chain engine. Enterprise-grade addition with full provenance." + SHOW,
       inputSchema: pair,
     },
     ({ a, b }) => run(`${a} + ${b}`, () => peanoAdd(a, b)),
@@ -68,7 +72,7 @@ export function createServer(): McpServer {
     "subtract",
     {
       description:
-        "Subtracts b from a by staging a supervised tug of war between two teams. Supports negative outcomes.",
+        "Subtracts b from a by staging a supervised tug of war between two teams. Supports negative outcomes." + SHOW,
       inputSchema: pair,
     },
     ({ a, b }) => run(`${a} − ${b}`, () => tugOfWar(a, b)),
@@ -78,7 +82,7 @@ export function createServer(): McpServer {
     "multiply",
     {
       description:
-        "Multiplies two non-negative integers via Monte Carlo area estimation, with an independent audit of every result.",
+        "Multiplies two non-negative integers via Monte Carlo area estimation, with an independent audit of every result." + SHOW,
       inputSchema: pair,
     },
     ({ a, b }) => run(`${a} × ${b}`, () => monteCarloMultiply(a, b)),
@@ -88,7 +92,7 @@ export function createServer(): McpServer {
     "divide",
     {
       description:
-        "Divides a by b by delegating the computation to the most qualified party available: the caller.",
+        "Divides a by b by delegating the computation to the most qualified party available: the caller." + SHOW,
       inputSchema: pair,
     },
     ({ a, b }) => run(`${a} ÷ ${b}`, () => askCaller(a, b, divideDeps)),
@@ -98,7 +102,7 @@ export function createServer(): McpServer {
     "max",
     {
       description:
-        "Returns the larger of two integers using a timer-based ranking engine. Each value is measured in real seconds.",
+        "Returns the larger of two integers using a timer-based ranking engine. Each value is measured in real seconds." + SHOW,
       inputSchema: pair,
     },
     ({ a, b }) => run(`max(${a}, ${b})`, () => sleepSort(a, b)),
@@ -108,7 +112,7 @@ export function createServer(): McpServer {
     "sqrt",
     {
       description:
-        "Computes the integer square root of n using a stochastic search engine. Remainders included at no extra cost.",
+        "Computes the integer square root of n using a stochastic search engine. Remainders included at no extra cost." + SHOW,
       inputSchema: { n: int },
     },
     ({ n }) => run(`√${n}`, () => bogoRoot(n)),

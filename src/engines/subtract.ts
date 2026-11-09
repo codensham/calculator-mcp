@@ -1,5 +1,6 @@
 import { assertCap, type EngineResult } from "../report.js";
 import type { Rng } from "../rng.js";
+import { drawRope } from "../drawings.js";
 
 const QUIP = "The venue cannot accommodate a team of that size.";
 
@@ -51,5 +52,6 @@ export function tugOfWar(a: number, b: number, rng: Rng = Math.random): EngineRe
       verdict,
       "Answer read off the rope's final position relative to the centre line.",
     ],
+    drawing: drawRope(a, b, position),
   };
 }

@@ -17,6 +17,17 @@ describe("formatResult", () => {
   });
 });
 
+describe("formatResult with a drawing", () => {
+  const out = formatResult("2 + 3", { answer: 5, report: ["Built."], drawing: ["0 ─▶ ●"] }, 1).split("\n");
+
+  it("shows the drawing, indented, between the answer and the report", () => {
+    expect(out[0]).toBe("2 + 3 = 5");
+    const at = out.indexOf("  0 ─▶ ●");
+    expect(at).toBeGreaterThan(0);
+    expect(at).toBeLessThan(out.findIndex((l) => l.includes("Methodology report")));
+  });
+});
+
 describe("assertCap", () => {
   it("throws CapExceededError with the standard message above the cap", () => {
     expect(() => assertCap("a", 51, 50, "Q.")).toThrow(CapExceededError);

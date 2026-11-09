@@ -1,9 +1,12 @@
 import { assertCap, type EngineResult } from "../report.js";
 import type { Rng } from "../rng.js";
+import { drawDarts } from "../drawings.js";
 
 const QUIP = "The dartboard procurement budget does not stretch that far.";
 const BATCH = 100_000;
 const Z_95 = 1.96;
+/** How many of the thrown darts make it into the drawing. */
+const PLOTTED = 120;
 
 /**
  * Multiplies a × b by throwing random darts at an a×b rectangle inside a square
@@ -22,6 +25,7 @@ export function monteCarloMultiply(
     return {
       answer: 0,
       report: ["One side of the rectangle has zero length. No darts were required.", "Audit: waived."],
+      drawing: [`A ${a}×${b} rectangle has no area to aim at.`, "The darts remain in their original packaging."],
     };
   }
 
@@ -33,12 +37,14 @@ export function monteCarloMultiply(
     let darts = 0;
     let hits = 0;
     let se = Infinity;
+    const sample: [number, number][] = [];
     while (darts < maxDartsPerAttempt) {
       const batch = Math.min(BATCH, maxDartsPerAttempt - darts);
       for (let i = 0; i < batch; i++) {
         const x = rng() * side;
         const y = rng() * side;
         if (x < a && y < b) hits++;
+        if (sample.length < PLOTTED) sample.push([x, y]);
       }
       darts += batch;
       const p = hits / darts;
@@ -65,6 +71,7 @@ export function monteCarloMultiply(
           ? [`${rejected} attempt${rejected === 1 ? "" : "s"} rejected by audit and rerun from scratch.`]
           : []),
       ],
+      drawing: drawDarts({ a, b, side, sample, darts, hitRate: hits / darts, estimate }),
     };
   }
 }

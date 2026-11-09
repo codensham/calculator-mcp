@@ -1,4 +1,5 @@
 import { assertCap, type EngineResult } from "../report.js";
+import { drawChain } from "../drawings.js";
 
 interface PeanoNode {
   prev: PeanoNode | null;
@@ -25,5 +26,6 @@ export function peanoAdd(a: number, b: number): EngineResult {
       `Constructed ${a + b} successor nodes on top of zero.`,
       `Counted the nodes by hand. Result verified by counting.`,
     ],
+    drawing: drawChain(a, b),
   };
 }

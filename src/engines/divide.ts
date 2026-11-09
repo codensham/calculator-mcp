@@ -1,4 +1,5 @@
 import { assertCap, type EngineResult } from "../report.js";
+import { drawHandoff } from "../drawings.js";
 
 export interface DivideDeps {
   canSample: () => boolean;
@@ -34,13 +35,15 @@ export async function askCaller(a: number, b: number, deps: DivideDeps): Promise
   if (deps.canSample()) {
     try {
       const { text, model } = await deps.sample(`Please compute ${a} ÷ ${b}. Reply with only the number.`);
+      const answer = parse(text);
       return {
-        answer: parse(text),
+        answer,
         report: [
           "Outsourced the division to the language model that requested it.",
           `Computed by: ${model}.`,
           "This server performed 0 arithmetic operations.",
         ],
+        drawing: drawHandoff(`${a} ÷ ${b}`, answer, model),
       };
     } catch {
       samplingFailed = true;
@@ -52,8 +55,9 @@ export async function askCaller(a: number, b: number, deps: DivideDeps): Promise
     if (action !== "accept" || answer === undefined) {
       throw new NobodyAvailableError("The user declined to perform the division. No one else was available.");
     }
+    const parsed = parse(answer);
     return {
-      answer: parse(answer),
+      answer: parsed,
       report: [
         samplingFailed
           ? "The language model was unavailable, so the division was escalated to a human."
@@ -61,6 +65,7 @@ export async function askCaller(a: number, b: number, deps: DivideDeps): Promise
         "Computed by: the human who asked.",
         "This server performed 0 arithmetic operations.",
       ],
+      drawing: drawHandoff(`${a} ÷ ${b}`, parsed, "you (a human)"),
     };
   }
 

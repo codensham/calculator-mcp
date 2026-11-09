@@ -1,4 +1,5 @@
 import { assertCap, type EngineResult } from "../report.js";
+import { drawTimers } from "../drawings.js";
 
 const QUIP = "Waits longer than 30 seconds require a change request.";
 
@@ -31,5 +32,6 @@ export async function sleepSort(a: number, b: number): Promise<EngineResult> {
         : `The ${first.value}-second timer finished first. The ${last.value}-second timer finished last and is declared the maximum.`,
       `Waited ${waited} ${waited === 1 ? "second" : "seconds"} in total.`,
     ],
+    drawing: drawTimers(a, b),
   };
 }
