@@ -17,6 +17,8 @@
 
 ## Installation
 
+You need [Node.js](https://nodejs.org) 20 or later. `calc-mcp` isn't on the npm registry. It installs straight from this GitHub repository and builds itself the first time it runs, so the first start takes a little longer.
+
 ### Claude Desktop
 
 Add this to `claude_desktop_config.json`:
@@ -26,7 +28,7 @@ Add this to `claude_desktop_config.json`:
   "mcpServers": {
     "calculator": {
       "command": "npx",
-      "args": ["-y", "calc-mcp"]
+      "args": ["-y", "github:codensham/calculator-mcp"]
     }
   }
 }
@@ -35,7 +37,21 @@ Add this to `claude_desktop_config.json`:
 ### Claude Code
 
 ```bash
-claude mcp add calculator -- npx -y calc-mcp
+claude mcp add calculator -- npx -y github:codensham/calculator-mcp
+```
+
+### From a local clone
+
+```bash
+git clone https://github.com/codensham/calculator-mcp.git
+cd calculator-mcp
+npm install
+```
+
+`npm install` also builds the server. Then point your client at `node` with the full path to `dist/index.js`, for example:
+
+```bash
+claude mcp add calculator -- node /path/to/calculator-mcp/dist/index.js
 ```
 
 Then ask your assistant what 2 + 3 is, and insist that it use the calculator.
@@ -144,11 +160,9 @@ Decimal support is on the roadmap.
 
 ## Client support for `divide`
 
-<!-- TODO: verify — see LAUNCH.md -->
-
 | Client | Model answers (sampling) | You answer (elicitation) |
 |---|---|---|
-| Claude Desktop | TBD | TBD |
+| Claude Desktop | Not yet tested | Not yet tested |
 | Claude Code | No | Supported, but the request came back declined in testing |
 
 If a client supports neither, `divide` reports that no one was available to perform the division.
