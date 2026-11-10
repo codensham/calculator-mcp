@@ -158,14 +158,6 @@ Your client doesn't support sampling, so the problem was escalated to the next m
 **Does it support decimals?**
 Decimal support is on the roadmap.
 
-## Client support for `divide`
-
-| Client | Model answers (sampling) | You answer (elicitation) |
-|---|---|---|
-| Claude Desktop | Not yet tested | Not yet tested |
-| Claude Code | No | Supported, but the request came back declined in testing |
-
-If a client supports neither, `divide` reports that no one was available to perform the division.
 
 ## Limits
 
