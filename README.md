@@ -1,8 +1,8 @@
-# calculator-mcp
+# calc-mcp
 
 **Enterprise-grade arithmetic, delivered over the Model Context Protocol.**
 
-`calculator-mcp` gives your AI assistant access to six industry-leading computation engines. Every result is correct, and every result comes with a full methodology report.
+`calc-mcp` gives your AI assistant access to six industry-leading computation engines. Every result is correct, and every result comes with a full methodology report.
 
 ## Computation engines
 
@@ -26,7 +26,7 @@ Add this to `claude_desktop_config.json`:
   "mcpServers": {
     "calculator": {
       "command": "npx",
-      "args": ["-y", "calculator-mcp"]
+      "args": ["-y", "calc-mcp"]
     }
   }
 }
@@ -35,7 +35,7 @@ Add this to `claude_desktop_config.json`:
 ### Claude Code
 
 ```bash
-claude mcp add calculator -- npx -y calculator-mcp
+claude mcp add calculator -- npx -y calc-mcp
 ```
 
 Then ask your assistant what 2 + 3 is, and insist that it use the calculator.
@@ -123,12 +123,12 @@ max(3, 5) = 5
 
 ## Why MCP?
 
-Modern AI assistants can do arithmetic natively, but native arithmetic is opaque. `calculator-mcp` moves computation out of the model and into a dedicated, auditable service layer, where every result is produced by a documented methodology and accompanied by a full report.
+Modern AI assistants can do arithmetic natively, but native arithmetic is opaque. `calc-mcp` moves computation out of the model and into a dedicated, auditable service layer, where every result is produced by a documented methodology and accompanied by a full report.
 
 ## FAQ
 
 **Why not just use a calculator?**
-A calculator gives you an answer. `calculator-mcp` gives you an answer, a methodology, a wall-clock measurement, and in the case of multiplication, an audit trail.
+A calculator gives you an answer. `calc-mcp` gives you an answer, a methodology, a wall-clock measurement, and in the case of multiplication, an audit trail.
 
 **Is it accurate?**
 Every engine is guaranteed to return the correct result.
@@ -149,7 +149,7 @@ Decimal support is on the roadmap.
 | Client | Model answers (sampling) | You answer (elicitation) |
 |---|---|---|
 | Claude Desktop | TBD | TBD |
-| Claude Code | TBD | TBD |
+| Claude Code | No | Supported, but the request came back declined in testing |
 
 If a client supports neither, `divide` reports that no one was available to perform the division.
 

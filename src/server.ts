@@ -31,7 +31,7 @@ async function run(expression: string, engine: () => EngineResult | Promise<Engi
 }
 
 export function createServer(): McpServer {
-  const server = new McpServer({ name: "calculator-mcp", version: "1.0.0" });
+  const server = new McpServer({ name: "calc-mcp", version: "1.0.0" });
 
   const divideDeps: DivideDeps = {
     canSample: () => Boolean(server.server.getClientCapabilities()?.sampling),

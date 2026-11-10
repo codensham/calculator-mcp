@@ -126,7 +126,7 @@ export function drawHandoff(expression: string, answer: number | string, who: st
   return [
     clip(expression, MAX_WIDTH),
     "  ▼",
-    "[ calculator-mcp ]   0 operations performed",
+    "[ calc-mcp ]   0 operations performed",
     "  ▼",
     clip(`${clip(who, 20).padEnd(20)} did the actual maths`, MAX_WIDTH),
     "  ▼",
